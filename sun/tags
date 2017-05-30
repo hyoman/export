@@ -1,0 +1,32 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+APP_VER	include/util.h	1;"	d
+CC	Makefile	/^CC=gcc$/;"	m
+DATA_FILE	main.c	21;"	d	file:
+DATA_SIZE	main.c	24;"	d	file:
+INC	Makefile	/^INC = -I.\/include$/;"	m
+LINEFEED	main.c	15;"	d	file:
+LINE_BUF_LEN	main.c	23;"	d	file:
+OBJECTS	Makefile	/^OBJECTS = ${SOURCES:.c=.o}$/;"	m
+SOURCES	Makefile	/^SOURCES = main.c util.c$/;"	m
+SPACE	main.c	16;"	d	file:
+TEMP_LEN	main.c	22;"	d	file:
+TITLE_PARAM	include/util.h	2;"	d
+app_info	util.c	/^static char app_info[][TITLE_PARAM] ={$/;"	v	file:
+appinfo_print	util.c	/^void appinfo_print(int argc, char **argv){$/;"	f
+argments_check	util.c	/^int argments_check(int argc){$/;"	f
+argv_parser	util.c	/^int argv_parser(int argc, char **argv)$/;"	f
+atomic_type	include/util.h	/^	char atomic_type;$/;"	m	struct:sw_data
+data	include/util.h	/^	char data[32];$/;"	m	struct:sw_data
+find_lf	main.c	/^int find_lf(char c)$/;"	f
+find_space	main.c	/^int find_space(char *buffer[], char *data)$/;"	f
+line	include/util.h	/^	int line;$/;"	m	struct:sw_data
+main	main.c	/^int main(int argc, char** argv){$/;"	f
+s_parser	main.c	/^int s_parser(struct sw_data *parsing_data, char *filename){$/;"	f
+show_all_data	main.c	/^int show_all_data(struct sw_data* data)$/;"	f
+sw_data	include/util.h	/^struct sw_data{$/;"	s
+target	Makefile	/^target = out $/;"	m

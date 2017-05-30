@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include "util.h"
+#include "include/util.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -23,37 +23,25 @@
 #define LINE_BUF_LEN 128 
 #define DATA_SIZE 4096
 
-
-//////////////////////
-// struct define 
-////////////////////////
-struct sw_data{
-	int line;
-	char atomic_type;
-	char data[32];
-
-};
-////////////////////////////////////////////
-/* function define */
-int find_space(char *buffer[], char *data);
-int find_lf(char c);
-int s_parser(struct sw_data*);
-int show_all_data(struct sw_data* data);
-/////////////////////////////////////////
-
-
+char filename[32];
 int main(int argc, char** argv){
-//	appinfo_print(argc,argv);
+	
+	
+	memset(filename, 0x00, 32);
+	appinfo_print(argc,argv);
+	argv_parser(argc,argv);
 	struct sw_data parsing_data[DATA_SIZE];
 	memset(parsing_data, 0x00, sizeof(struct sw_data)*DATA_SIZE);
-	s_parser(parsing_data);
+
+	
+	s_parser(parsing_data,filename);
 	show_all_data(parsing_data);
 	return 0;
 
 }
 
 
-int s_parser(struct sw_data *parsing_data){
+int s_parser(struct sw_data *parsing_data, char *filename){
 
 	int fd;
 	int line_count=0;
@@ -61,9 +49,11 @@ int s_parser(struct sw_data *parsing_data){
 	char line_buffer[LINE_BUF_LEN]={0,};
 
 	int st_index=0;
-
-
-	fd = open(DATA_FILE, O_RDONLY);
+	if((strlen(filename)>1)){
+		fd = open(filename, O_RDONLY);
+	}else{
+		fd = open(DATA_FILE, O_RDONLY);
+	}
 	if (!fd)
 		printf( "Can't open proc file 'version'");
 	
