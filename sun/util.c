@@ -1,6 +1,5 @@
 #include <stdio.h>     /* for printf */
 #include <stdlib.h>    /* for exit */
-#include <getopt.h>
 #include "include/util.h"
 extern char filename[32];
 static char app_info[][TITLE_PARAM] ={
@@ -34,7 +33,7 @@ void appinfo_print(int argc, char **argv){
 	printf("====================================================\n");
 
 }
- 
+#if 0 
 int argv_parser(int argc, char **argv)
 {
 	int c;
@@ -73,14 +72,16 @@ int argv_parser(int argc, char **argv)
 				printf("option %c\n", c);
 				break;
 
+			case 'v':
+				
+				show_all_data(parsing_data);
+				break;
 			case 'c':
 				printf("c input\n");
 				break;
 			case 's':
-				printf("c input\n");
 				break;
 			case 'e':
-				printf("c input\n");
 				break;
 			case 'a':
 			//	printf("add %s" , argv[optind-1]);
@@ -106,3 +107,4 @@ int argv_parser(int argc, char **argv)
 
 	//exit(EXIT_SUCCESS);
 }
+#endif

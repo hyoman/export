@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+#include <getopt.h>
 
 /* preprocess */
 //#define DEBUG 
@@ -23,21 +24,79 @@
 #define LINE_BUF_LEN 128 
 #define DATA_SIZE 4096
 
-char filename[32];
 int main(int argc, char** argv){
-	
-	
+	char filename[32];
+
 	memset(filename, 0x00, 32);
-	appinfo_print(argc,argv);
-	argv_parser(argc,argv);
+//	appinfo_print(argc,argv);
 	struct sw_data parsing_data[DATA_SIZE];
 	memset(parsing_data, 0x00, sizeof(struct sw_data)*DATA_SIZE);
+	int c;
+	int digit_optind = 0;
+	while (1) {
+		int this_option_optind = optind ? optind : 1;
+		int option_index = 0;
+		static struct option long_options[] = {
+			{"add",     required_argument, 0,  'a' },
+			{"sum", 	required_argument, 0,  's' },
+			{"end ",  required_argument, 0,  'e' },
+			{"verbose", no_argument,       0, 'v' },
+			{"create",  no_argument,	 0, 'c'},
+			{"open",    required_argument, 0, 'o' },
+			{0,         0,                 0,  0 }
+		};
 
+		c = getopt_long(argc, argv, "abc:d:A:v:f:012",
+				long_options, &option_index);
+		if (c == -1)
+			break;
+		switch (c) {
+			case 0:
+				printf("option %s", long_options[option_index].name);
+				if (optarg)
+					printf(" with arg %s", optarg);
+				printf("\n");
+				break;
+
+			case '0':
+			case '1':
+			case '2':
+				if (digit_optind != 0 && digit_optind != this_option_optind)
+					printf("digits occur in two different argv-elements.\n");
+				digit_optind = this_option_optind;
+				printf("option %c\n", c);
+				break;
+			case 'o':
+		//		printf("open [flle] %s" , argv[optind-1]);
+				strcpy(filename, argv[optind-1]);
+				s_parser(parsing_data,filename);
+				break;
+			case 'c':
+				break;
+			case 's':
+				break;
+			case 'e':
+				break;
+			case 'a':
+			//	printf("add %s" , argv[optind-1]);
+				break;
+			case '?':
+				printf("???\n");
+				break;
+			case 'v':
+				show_all_data(parsing_data);
+				break;
+			default:
+				printf("?? getopt returned character code 0%o ??\n", c);
+		}
+	}
+	if (optind < argc) {
+		printf("non-option ARGV-elements: ");
+		while (optind < argc)
+			printf("%s ",optind ,argv[optind++]);
+		printf("\n");
+	}
 	
-	s_parser(parsing_data,filename);
-	show_all_data(parsing_data);
-	return 0;
-
 }
 
 
@@ -49,9 +108,11 @@ int s_parser(struct sw_data *parsing_data, char *filename){
 	char line_buffer[LINE_BUF_LEN]={0,};
 
 	int st_index=0;
-	if((strlen(filename)>1)){
+	if((strlen(filename)>2)){
+		//printf("open 1\n");
 		fd = open(filename, O_RDONLY);
 	}else{
+	//	printf("open 2\n");
 		fd = open(DATA_FILE, O_RDONLY);
 	}
 	if (!fd)

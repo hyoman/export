@@ -12,7 +12,7 @@ struct sw_data{
 
 int argments_check(int argc);
 void appinfo_print(int argc, char **argv);
-int argv_parser(int argc, char **argv);
+//int argv_parser(int argc, char **argv);
 ////////////////////////////////////////////
 /* function define */
 int find_space(char *buffer[], char *data);
