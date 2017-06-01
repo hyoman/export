@@ -7,9 +7,18 @@
 #include <getopt.h>
 
 /* preprocess */
-//#define DEBUG 
+#define DEBUG 
 
 
+/* font */
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KWHT  "\x1B[37m"
+
+//
 ///////////////
 /* return */
 ////////////////////////
@@ -161,11 +170,18 @@ int s_parser(struct sw_data *parsing_data, char *filename){
 #endif
 				st_index++;
 			}
-#else 
-			if( (line_count % 9) == 5 ){
+#else
+#if 1
+			// if 9th line is not lf, we skip and increase line_count 
+			if(strlen(line_buffer)<1 && line_count>10){
+				line_count--;
+				continue;
+			}
+#endif
+			if( (line_count % 8) == 5 ){
 				parsing_data[st_index].line = line_count;
 				parsing_data[st_index].atomic_type = line_buffer[0];
-			}else if ( (line_count % 9) ==6){
+			}else if ( (line_count % 8) ==6){
 				strcpy(parsing_data[st_index].data, line_buffer);
 				st_index++;
 			}
@@ -173,7 +189,8 @@ int s_parser(struct sw_data *parsing_data, char *filename){
 #endif
 
 #ifdef DEBUG
-			printf("%s [LINE:%d] \n", line_buffer, line_count);
+			//printf("%s [LINE:%d, strlen:%d] \n", KYEL, line_buffer, line_count,strlen(line_buffer));
+			printf("%s [%sLINE:%d%s, strlen:%d] \n", line_buffer,KYEL, line_count,KWHT,strlen(line_buffer));
 #endif
 			memset(line_buffer, 0x00, LINE_BUF_LEN);
 
